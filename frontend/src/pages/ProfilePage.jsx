@@ -67,7 +67,7 @@ const ProfilePage = () => {
       return showNotification('Password must be at least 6 characters', 'error');
     }
     try {
-      await apiFetch('/api/users/change-password', {
+      await apiFetch(`/api/users/change-password`, {
         method: 'POST',
         body: JSON.stringify({ 
           userId: user.id, 
