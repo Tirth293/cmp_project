@@ -1,0 +1,184 @@
+.welcome-container {
+  width: 100%;
+  height: 100vh;
+  background:
+    radial-gradient(circle at top left, #2563eb33, transparent 30%),
+    radial-gradient(circle at bottom right, #7c3aed33, transparent 30%),
+    linear-gradient(135deg, #020617, #081028, #0f172a);
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.welcome-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+.welcome-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 40px;
+  letter-spacing: -0.02em;
+  color: white;
+}
+
+/* Optional: Add hover effect to the colored text */
+.welcome-title span {
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.welcome-title span:hover {
+  transform: scale(1.05);
+}
+.welcome-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 40px;
+  animation: fadeUp 1s ease;
+  max-width: 800px;
+}
+
+.welcome-logo {
+  width: 120px;
+  margin-bottom: 30px;
+  animation: floatLogo 3s ease-in-out infinite;
+}
+
+.welcome-title {
+  font-size: 3.5rem;
+  color: white;
+  font-weight: 700;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+
+.brand-highlight {
+  background: linear-gradient(90deg, #60a5fa, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.welcome-tagline {
+  font-size: 1.8rem;
+  font-weight: 600;
+  background: linear-gradient(90deg, #fff, #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 15px;
+  letter-spacing: -0.01em;
+}
+
+.welcome-subtitle {
+  color: #94a3b8;
+  font-size: 1.1rem;
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+}
+
+.button-group {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.explore-btn {
+  padding: 14px 32px;
+  border: none;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.35);
+  transition: 0.35s;
+}
+
+.explore-btn:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 20px 40px rgba(37, 99, 235, 0.45);
+}
+
+.continue-btn {
+  padding: 14px 32px;
+  border: 2px solid rgba(59, 130, 246, 0.5);
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  background: transparent;
+  transition: 0.35s;
+}
+
+.continue-btn:hover {
+  border-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+  transform: translateY(-2px);
+}
+
+@keyframes floatLogo {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+  .welcome-logo {
+    width: 90px;
+  }
+  
+  .welcome-title {
+    font-size: 2rem;
+  }
+  
+  .welcome-tagline {
+    font-size: 1.3rem;
+  }
+  
+  .welcome-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .button-group {
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+  }
+  
+  .explore-btn,
+  .continue-btn {
+    width: 100%;
+    max-width: 250px;
+  }
+}
