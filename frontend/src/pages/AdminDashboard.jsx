@@ -103,7 +103,7 @@ const AdminDashboard = () => {
   const fetchEmployees = async () => {
     setLoading(true);
     try {
-      const url = branchFilter && branchFilter !== 'all' ? `${API_BASE_URL}/api/users?branch=${encodeURIComponent(branchFilter)}` : `${API_BASE_URL}/api/users`;
+      const url = branchFilter && branchFilter !== 'all' ? `/api/users?branch=${encodeURIComponent(branchFilter)}` : '/api/users';
       const res = await fetch(url);
       const users = await res.json();
       const employeesList = Array.isArray(users) ? users : [];

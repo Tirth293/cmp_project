@@ -43,7 +43,7 @@ const ProfilePage = () => {
     e.preventDefault();
     setIsSaving(true);
     try {
-      const updatedUser = await apiFetch(`/users/update-profile`, {
+      const updatedUser = await apiFetch(`/api/users/update-profile`, {
         method: 'PUT',
         body: JSON.stringify({ userId: user.id, ...formData }),
       });
@@ -67,7 +67,7 @@ const ProfilePage = () => {
       return showNotification('Password must be at least 6 characters', 'error');
     }
     try {
-      await apiFetch('/users/change-password', {
+      await apiFetch('/api/users/change-password', {
         method: 'POST',
         body: JSON.stringify({ 
           userId: user.id, 
