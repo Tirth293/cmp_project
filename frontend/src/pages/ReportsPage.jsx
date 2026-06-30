@@ -4,6 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import companyLogo from './Transparent logo.png?inline';
+import API_BASE_URL from '../utils/api';
 
 const addReportHeader = (doc, title) => {
   const pageWidth = doc.internal.pageSize.getWidth();
@@ -40,9 +41,9 @@ const ReportsPage = () => {
   const fetchReportData = async () => {
     try {
       const [summaryRes, trendsRes, archiveRes] = await Promise.all([
-        fetch('/api/reports/summary'),
-        fetch('/api/reports/trends'),
-        fetch('/api/reports/all')
+        fetch(`${API_BASE_URL}/api/reports/summary`),
+        fetch(`${API_BASE_URL}/api/reports/trends`),
+        fetch(`${API_BASE_URL}/api/reports/all`)
       ]);
       
       const summaryData = await summaryRes.json();

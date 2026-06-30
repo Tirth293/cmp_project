@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Bell, X, AlertCircle, Mail, CheckCheck } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useNotify } from '../context/NotificationContext';
+import API_BASE_URL from '../utils/api';
 
 const NotificationCenter = () => {
     const { user } = useAuth();
@@ -16,7 +17,7 @@ const NotificationCenter = () => {
         
         setLoading(true);
         try {
-            const response = await fetch(`/api/notifications/my?userId=${user.id}&userRole=${user.role}`);
+            const response = await fetch(`${API_BASE_URL}/api/notifications/my?userId=${user.id}&userRole=${user.role}`);
             
             if (!response.ok) {
                 throw new Error('Failed to fetch notifications');
@@ -41,7 +42,7 @@ const NotificationCenter = () => {
 
     const markAsRead = async (id) => {
         try {
-            const response = await fetch(`/api/notifications/${id}/read`, {
+            const response = await fetch(`${API_BASE_URL}/api/notifications/${id}/read`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ userId: user.id })
@@ -64,7 +65,7 @@ const NotificationCenter = () => {
 
     const markAllAsRead = async () => {
         try {
-            const response = await fetch('/api/notifications/mark-all-read', {
+            const response = await fetch(`${API_BASE_URL}/api/notifications/mark-all-read`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ userId: user.id, userRole: user.role })

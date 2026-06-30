@@ -5,6 +5,7 @@ import { Calendar, Users, Download, Filter, Search, User, Clock, MapPin } from '
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import companyLogo from './Transparent logo.png?inline';
+import API_BASE_URL from '../utils/api';
 
 const addPdfHeader = (doc, title) => {
   const pageWidth = doc.internal.pageSize.getWidth();
@@ -46,7 +47,7 @@ const AttendanceManagement = () => {
 
   const fetchBranches = async () => {
     try {
-      const res = await fetch('/api/auth/branches');
+      const res = await fetch(`${API_BASE_URL}/api/auth/branches`);
       const data = await res.json();
       setBranches(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -59,7 +60,7 @@ const AttendanceManagement = () => {
     try {
       const params = new URLSearchParams({ role: user.role });
       if (branchFilter && branchFilter !== 'all') params.append('branch', branchFilter);
-      const response = await fetch(`/api/attendance/all?${params}`);
+      const response = await fetch(`${API_BASE_URL}/api/attendance/all?${params}`);
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Failed to fetch');
       setAttendance(Array.isArray(data) ? data : []);
@@ -76,7 +77,7 @@ const AttendanceManagement = () => {
     try {
       const params = new URLSearchParams({ role: user.role });
       if (branchFilter && branchFilter !== 'all') params.append('branch', branchFilter);
-      const response = await fetch(`/api/attendance/daily-status?${params}`);
+      const response = await fetch(`${API_BASE_URL}/api/attendance/daily-status?${params}`);
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Failed to fetch status');
       setDailyStatus(Array.isArray(data) ? data : []);

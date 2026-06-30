@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import logo from '../pages/Transparent logo.png';
+import API_BASE_URL from '../utils/api';
 
 const EmployeeSidebar = () => {
   const { user, logout } = useAuth();
@@ -79,7 +80,7 @@ const EmployeeSidebar = () => {
     // Fetch pending tasks count
     const fetchPendingTasks = async () => {
       try {
-        const response = await fetch(`/api/tasks/employee/${user?.id}`);
+        const response = await fetch(`${API_BASE_URL}/api/tasks/employee/${user?.id}`);
         const tasks = await response.json();
         const pending = tasks.filter(t => t.status !== 'Completed').length;
         setPendingTasks(pending);

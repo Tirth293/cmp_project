@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Send, X, Users, User, AlertTriangle, Globe, Briefcase, Shield, UserCheck, Search, ChevronDown, Upload } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useNotify } from '../context/NotificationContext';
+import API_BASE_URL from '../utils/api';
 
 const SendNotificationModal = ({ onClose, onSend }) => {
     const { user } = useAuth();
@@ -31,7 +32,7 @@ const SendNotificationModal = ({ onClose, onSend }) => {
     const fetchEmployees = async () => {
         setLoadingEmployees(true);
         try {
-            const response = await fetch('/api/users');
+            const response = await fetch(`${API_BASE_URL}/api/users`);
             const data = await response.json();
             setAllEmployees(Array.isArray(data) ? data : []);
         } catch (err) {
@@ -68,7 +69,7 @@ const SendNotificationModal = ({ onClose, onSend }) => {
                 sender_id: user.id
             };
 
-            const response = await fetch('/api/notifications/send', {
+            const response = await fetch(`${API_BASE_URL}/api/notifications/send`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)

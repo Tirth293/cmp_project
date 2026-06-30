@@ -12,6 +12,7 @@ import { useNotify } from '../context/NotificationContext';
 import { useAuth } from '../context/AuthContext';
 import SendNotificationModal from '../components/SendNotificationModal';
 import * as XLSX from 'xlsx'; // ✨ EXCEL EXPORT
+import API_BASE_URL from '../utils/api';
 
 
 const ROLE_LABELS = { admin: 'Admin', hr: 'HR Manager', employee: 'Employee' };
@@ -110,7 +111,7 @@ const AdminDashboard = () => {
       const employeesWithMetrics = await Promise.all(
         employeesList.map(async (emp) => {
           try {
-            const metricsRes = await fetch(`/api/metrics/${emp.id}`);
+            const metricsRes = await fetch(`${API_BASE_URL}/api/metrics/${emp.id}`);
             const metricsData = await metricsRes.json();
             let filteredMetrics = Array.isArray(metricsData) ? metricsData : [];
             
@@ -227,7 +228,7 @@ const AdminDashboard = () => {
 
   const fetchBranches = async () => {
     try {
-      const res = await fetch('/api/auth/branches');
+      const res = await fetch(`${API_BASE_URL}/api/auth/branches`);
       const data = await res.json();
       setBranches(Array.isArray(data) ? data : ['Ashram Road', 'Maninagar']);
     } catch (err) {
@@ -246,8 +247,8 @@ const AdminDashboard = () => {
     }
 
     const [statsRes, attendRes] = await Promise.all([
-      fetch('/api/users/branch-stats'),
-      fetch(`/api/attendance/daily-status?${attendanceQuery.toString()}`)
+      fetch(`${API_BASE_URL}/api/users/branch-stats`),
+      fetch(`${API_BASE_URL}/api/attendance/daily-status?${attendanceQuery.toString()}`)
     ]);
 
     const statsData = await statsRes.json();
@@ -323,7 +324,7 @@ const AdminDashboard = () => {
 };
   const fetchLeaves = async () => {
     try {
-      const res = await fetch(`/api/leave/all?role=${authUser?.role}`);
+      const res = await fetch(`${API_BASE_URL}/api/leave/all?role=${authUser?.role}`);
       const data = await res.json();
       setLeaves(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -343,8 +344,8 @@ const AdminDashboard = () => {
 
       const query = params.toString() ? `?${params.toString()}` : '';
       const [summaryRes, employeeRes] = await Promise.all([
-        fetch(`/api/updates/summary${query}`),
-        fetch(`/api/updates/by-employee${query}`)
+        fetch(`${API_BASE_URL}/api/updates/summary${query}`),
+        fetch(`${API_BASE_URL}/api/updates/by-employee${query}`)
       ]);
       
       const summaryData = await summaryRes.json();
@@ -582,10 +583,10 @@ const AdminDashboard = () => {
       const emp = reportEmployees[i];
       try {
         const [metricsRes, ratingsRes, attendanceRes, leaveRes] = await Promise.all([
-          fetch(`/api/metrics/${emp.id}`),
-          fetch(`/api/ratings/${emp.id}`),
-          fetch(`/api/attendance/user/${emp.id}/summary`),
-          fetch(`/api/leave/user/${emp.id}/summary`)
+          fetch(`${API_BASE_URL}/api/metrics/${emp.id}`),
+          fetch(`${API_BASE_URL}/api/ratings/${emp.id}`),
+          fetch(`${API_BASE_URL}/api/attendance/user/${emp.id}/summary`),
+          fetch(`${API_BASE_URL}/api/leave/user/${emp.id}/summary`)
         ]);
 
         const metricsData = await metricsRes.json();
@@ -834,7 +835,7 @@ const AdminDashboard = () => {
       params.append('dateFrom', range.start);
       params.append('dateTo', range.end);
 
-      const response = await fetch(`/api/updates/by-employee?${params.toString()}`);
+      const response = await fetch(`${API_BASE_URL}/api/updates/by-employee?${params.toString()}`);
       const workData = await response.json();
 
       const comparison = (Array.isArray(workData) ? workData : []).map(emp => {
@@ -1357,10 +1358,10 @@ const AdminDashboard = () => {
                             <button className="btn-secondary" style={{ padding: '0.3rem 0.6rem', fontSize: '0.7rem' }} onClick={async () => {
                               showNotification(`Generating report for ${emp.name}...`, 'info');
                               const [mRes, rRes, aRes, lRes] = await Promise.all([
-                                fetch(`/api/metrics/${emp.id}`),
-                                fetch(`/api/ratings/${emp.id}`),
-                                fetch(`/api/attendance/user/${emp.id}/summary`),
-                                fetch(`/api/leave/user/${emp.id}/summary`)
+                                fetch(`${API_BASE_URL}/api/metrics/${emp.id}`),
+                                fetch(`${API_BASE_URL}/api/ratings/${emp.id}`),
+                                fetch(`${API_BASE_URL}/api/attendance/user/${emp.id}/summary`),
+                                fetch(`${API_BASE_URL}/api/leave/user/${emp.id}/summary`)
                               ]);
                               const mData = await mRes.json();
                               const rData = await rRes.json();

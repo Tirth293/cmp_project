@@ -5,6 +5,7 @@ import { CalendarDays, CheckCircle, XCircle, Clock, User, Filter, Download } fro
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import companyLogo from './Transparent logo.png?inline';
+import API_BASE_URL from '../utils/api';
 
 const addPdfHeader = (doc, title) => {
   const pageWidth = doc.internal.pageSize.getWidth();
@@ -38,7 +39,7 @@ const LeaveManagement = () => {
   const fetchLeaves = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/leave/all?role=${user.role}`);
+      const response = await fetch(`${API_BASE_URL}/api/leave/all?role=${user.role}`);
       const data = await response.json();
       setLeaves(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -58,7 +59,7 @@ const LeaveManagement = () => {
     }
     
     try {
-      const response = await fetch(`/api/leave/${leaveId}/status`, {
+      const response = await fetch(`${API_BASE_URL}/api/leave/${leaveId}/status`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 

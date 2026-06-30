@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, Send, X, Bot } from 'lucide-react';
 import { useNotify } from '../context/NotificationContext';
 import './HRChatbot.css';
+import API_BASE_URL from '../utils/api';
 
 const HRChatbot = () => {
   const { showNotification } = useNotify();
@@ -53,7 +54,7 @@ const HRChatbot = () => {
     setIsTyping(true);
 
     try {
-      const response = await fetch('/api/chatbot/query', {
+      const response = await fetch(`${API_BASE_URL}/api/chatbot/query`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: userMessage.text })

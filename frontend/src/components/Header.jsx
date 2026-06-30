@@ -3,6 +3,7 @@ import { Moon, Sun, Cloud, User, X, Users as TeamIcon } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import NotificationCenter from './NotificationCenter'; // ✅ ADD THIS IMPORT
+import API_BASE_URL from '../utils/api';
 
 const Header = () => {
   const { user } = useAuth();
@@ -17,7 +18,7 @@ const Header = () => {
 
     const checkServer = async () => {
       try {
-        const res = await fetch('/api/health');
+        const res = await fetch(`${API_BASE_URL}/api/health`);
         if (res.ok) setServerStatus('connected');
         else setServerStatus('error');
       } catch {

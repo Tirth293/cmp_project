@@ -7,6 +7,7 @@ import { useNotify } from '../context/NotificationContext';
 import { Sparkles, Activity } from 'lucide-react';
 import * as XLSX from 'xlsx';
 import HourlyUpdatesForm from '../components/HourlyUpdatesForm';
+import API_BASE_URL from '../utils/api';
 
 // ─────────── Modal Backdrop ───────────
 const Modal = ({ title, onClose, children }) => (
@@ -130,7 +131,7 @@ const EmployeeDashboard = () => {
 
   const fetchPerfMetrics = async () => {
     try {
-      const response = await fetch(`/api/metrics/${user.id}`);
+      const response = await fetch(`${API_BASE_URL}/api/metrics/${user.id}`);
       const data = await response.json();
       setPerfMetrics(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -140,7 +141,7 @@ const EmployeeDashboard = () => {
 
   const fetchRatings = async () => {
     try {
-      const response = await fetch(`/api/ratings/${user.id}`);
+      const response = await fetch(`${API_BASE_URL}/api/ratings/${user.id}`);
       const data = await response.json();
       setRatings(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -151,7 +152,7 @@ const EmployeeDashboard = () => {
   // ✅ UPDATED: Show both count and total days
   const fetchLeaveData = async () => {
     try {
-      const response = await fetch(`/api/leave/user/${user.id}`);
+      const response = await fetch(`${API_BASE_URL}/api/leave/user/${user.id}`);
       const data = await response.json();
       if (data && Array.isArray(data) && data.length > 0) {
         // Approved leaves
@@ -210,7 +211,7 @@ const EmployeeDashboard = () => {
 
   const fetchAttendanceHistory = async () => {
     try {
-      const response = await fetch(`/api/attendance/user/${user.id}`);
+      const response = await fetch(`${API_BASE_URL}/api/attendance/user/${user.id}`);
       const data = await response.json();
       setAttendanceHistory(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -220,7 +221,7 @@ const EmployeeDashboard = () => {
 
   const fetchMonthlyUpdateReport = async () => {
     try {
-      const response = await fetch(`/api/metrics/monthly-from-updates/${user.id}?month=${workMonth}`);
+      const response = await fetch(`${API_BASE_URL}/api/metrics/monthly-from-updates/${user.id}?month=${workMonth}`);
       const data = await response.json();
       setMonthlyUpdateReport(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -232,7 +233,7 @@ const EmployeeDashboard = () => {
   const handleClockIn = async () => {
     setIsClockingIn(true);
     try {
-      const response = await fetch('/api/attendance/clock-in', {
+      const response = await fetch(`${API_BASE_URL}/api/attendance/clock-in`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: user.id })
@@ -255,7 +256,7 @@ const EmployeeDashboard = () => {
   const handleApplyLeave = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/leave/apply', {
+      const response = await fetch(`${API_BASE_URL}/api/leave/apply`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...leaveForm, userId: user.id })
@@ -279,7 +280,7 @@ const EmployeeDashboard = () => {
     try {
       const month_year = `${workMonth}-01`;
       
-      const response = await fetch('/api/metrics/submit-from-updates', {
+      const response = await fetch(`${API_BASE_URL}/api/metrics/submit-from-updates`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -309,7 +310,7 @@ const EmployeeDashboard = () => {
 
   const fetchTasks = async () => {
     try {
-      const response = await fetch(`/api/tasks/employee/${user.id}`);
+      const response = await fetch(`${API_BASE_URL}/api/tasks/employee/${user.id}`);
       const data = await response.json();
       setTasks(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -320,7 +321,7 @@ const EmployeeDashboard = () => {
   const handleAddTask = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/tasks', {
+      const response = await fetch(`${API_BASE_URL}/api/tasks`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -344,7 +345,7 @@ const EmployeeDashboard = () => {
   const handleUpdateTask = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`/api/tasks/${selectedTask.id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/tasks/${selectedTask.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -364,7 +365,7 @@ const EmployeeDashboard = () => {
 
   const handleDeleteTask = async () => {
     try {
-      const response = await fetch(`/api/tasks/${selectedTask.id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/tasks/${selectedTask.id}`, {
         method: 'DELETE'
       });
       if (response.ok) {
@@ -380,7 +381,7 @@ const EmployeeDashboard = () => {
   const toggleStatus = async (task) => {
     const newStatus = task.status === 'Completed' ? 'Pending' : 'Completed';
     try {
-      const response = await fetch(`/api/tasks/${task.id}/status`, {
+      const response = await fetch(`${API_BASE_URL}/api/tasks/${task.id}/status`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus })
@@ -447,8 +448,8 @@ const EmployeeDashboard = () => {
   const handleDownloadPDF = async () => {
     try {
       const [attendanceRes, leaveRes] = await Promise.all([
-        fetch(`/api/attendance/user/${user.id}/summary`),
-        fetch(`/api/leave/user/${user.id}/summary`)
+        fetch(`${API_BASE_URL}/api/attendance/user/${user.id}/summary`),
+        fetch(`${API_BASE_URL}/api/leave/user/${user.id}/summary`)
       ]);
       const attendanceSummary = await attendanceRes.json();
       const leaveSummary = await leaveRes.json();

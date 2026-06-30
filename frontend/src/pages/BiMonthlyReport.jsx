@@ -3,6 +3,7 @@ import { useNotify } from '../context/NotificationContext';
 import { generateBiMonthlyReportPDF } from '../utils/pdfExport';
 import { generateBiMonthlyReportDOC } from '../utils/docExport';
 import { FileText, Download, Calendar, MapPin, Users, TrendingUp, AlertCircle, CheckCircle, FileDown, FileCode, Copy, ClipboardCheck } from 'lucide-react';
+import API_BASE_URL from '../utils/api';
 
 const BiMonthlyReport = () => {
   const [reportData, setReportData] = useState(null);
@@ -46,7 +47,7 @@ const BiMonthlyReport = () => {
   const autoSaveReport = async (data) => {
     if (!data) return;
     try {
-      await fetch('/api/reports/bi-monthly/save', {
+      await fetch(`${API_BASE_URL}/api/reports/bi-monthly/save`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

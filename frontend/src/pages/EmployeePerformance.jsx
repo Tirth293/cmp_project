@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { TrendingUp, Target, CheckCircle, Clock, ArrowUpRight, BarChart3 } from 'lucide-react';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
+import API_BASE_URL from '../utils/api';
 
 const EmployeePerformance = () => {
   const { user } = useAuth();
@@ -16,7 +17,7 @@ const EmployeePerformance = () => {
 
   const fetchMetrics = async () => {
     try {
-      const response = await fetch(`/api/metrics/${user.id}`);
+      const response = await fetch(`${API_BASE_URL}/api/metrics/${user.id}`);
       const data = await response.json();
       setMetrics(Array.isArray(data) ? data : []);
     } catch (err) {

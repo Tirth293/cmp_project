@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AlertCircle, Briefcase, Building2, CalendarClock, Loader, Phone, Route, Save, Send, Timer } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useNotify } from '../context/NotificationContext';
+import API_BASE_URL from '../utils/api';
 
 const ALLOWED_SLOTS = [
   '11:00 AM',
@@ -76,7 +77,7 @@ const HourlyUpdatesForm = () => {
 
   const fetchProjects = async () => {
     try {
-      const response = await fetch('/api/updates/projects');
+      const response = await fetch(`${API_BASE_URL}/api/updates/projects`);
       const data = await response.json();
       setProjects(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -86,7 +87,7 @@ const HourlyUpdatesForm = () => {
 
   const fetchTodayUpdates = async () => {
     try {
-      const response = await fetch(`/api/updates/user/${user.id}`);
+      const response = await fetch(`${API_BASE_URL}/api/updates/user/${user.id}`);
       const data = await response.json();
       const today = new Date().toISOString().slice(0, 10);
       const todayData = (Array.isArray(data) ? data : [])
@@ -126,7 +127,7 @@ const HourlyUpdatesForm = () => {
 
     setLoading(true);
     try {
-      const response = await fetch('/api/updates/submit', {
+      const response = await fetch(`${API_BASE_URL}/api/updates/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
