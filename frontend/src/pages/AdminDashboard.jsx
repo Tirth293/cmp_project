@@ -103,7 +103,7 @@ const AdminDashboard = () => {
   const fetchEmployees = async () => {
     setLoading(true);
     try {
-      const url = branchFilter && branchFilter !== 'all' ? `/api/users?branch=${encodeURIComponent(branchFilter)}` : '/api/users';
+      const url = branchFilter && branchFilter !== 'all' ? `${API_BASE_URL}/api/users?branch=${encodeURIComponent(branchFilter)}` : `${API_BASE_URL}/api/users`;
       const res = await fetch(url);
       const users = await res.json();
       const employeesList = Array.isArray(users) ? users : [];
@@ -475,7 +475,7 @@ const AdminDashboard = () => {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const res = await fetch('http://localhost:5000/api/auth/register', {
+      const res = await fetch(`${API_BASE_URL}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newUser)
@@ -500,7 +500,7 @@ const AdminDashboard = () => {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/users/${selectedEmp.id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/users/${selectedEmp.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editUser)
@@ -523,7 +523,7 @@ const AdminDashboard = () => {
   const handleDeleteUser = async () => {
     setSubmitting(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/users/${selectedEmp.id}`, { method: 'DELETE' });
+      const res = await fetch(`${API_BASE_URL}/api/users/${selectedEmp.id}`, { method: 'DELETE' });
       if (res.ok) {
         setEmployees(prev => prev.filter(e => e.id !== selectedEmp.id));
         closeModal();
@@ -550,7 +550,7 @@ const AdminDashboard = () => {
 
       const month_year = new Date().toISOString().slice(0, 7) + '-01';
       
-      const res = await fetch('http://localhost:5000/api/metrics/update', {
+      const res = await fetch(`${API_BASE_URL}/api/metrics/update`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ employee_id: selectedEmp.id, month_year, ...metricsToSend })

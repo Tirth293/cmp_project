@@ -20,7 +20,7 @@ const BiMonthlyReport = () => {
   const fetchReport = async () => {
     setLoading(true);
     try {
-      let url = '/api/reports/bi-monthly/generate';
+      let url = `${API_BASE_URL}/api/reports/bi-monthly/generate`;
       if (startDate && endDate) {
         url += `?start_date=${startDate}&end_date=${endDate}`;
       }
